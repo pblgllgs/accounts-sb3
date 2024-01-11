@@ -17,18 +17,19 @@ import com.pblgllgs.accounts.repository.CustomerRepository;
 import com.pblgllgs.accounts.service.ICustomerService;
 import com.pblgllgs.accounts.service.client.CardsFeignClient;
 import com.pblgllgs.accounts.service.client.LoansFeignClient;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CustomerServiceImpl implements ICustomerService {
 
-    private final CardsFeignClient cardsFeignClient;
-    private final LoansFeignClient loansFeignClient;
-    private final AccountsRepository accountsRepository;
-    private final CustomerRepository customerRepository;
+    private CardsFeignClient cardsFeignClient;
+    private LoansFeignClient loansFeignClient;
+    private AccountsRepository accountsRepository;
+    private CustomerRepository customerRepository;
 
     /**
      * @param mobileNumber
