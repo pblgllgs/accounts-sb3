@@ -63,7 +63,7 @@ public class AccountsController {
 
     @Operation(
             summary = "Fetch Account REST API",
-            description = "RESET API to fetch a Customer details"
+            description = "REST API to fetch a Customer details"
     )
     @ApiResponses({
             @ApiResponse(
