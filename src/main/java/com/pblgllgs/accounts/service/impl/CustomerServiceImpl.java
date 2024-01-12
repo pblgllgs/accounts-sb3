@@ -6,7 +6,10 @@ package com.pblgllgs.accounts.service.impl;
  *
  */
 
-import com.pblgllgs.accounts.dto.*;
+import com.pblgllgs.accounts.dto.AccountsDto;
+import com.pblgllgs.accounts.dto.CardsDto;
+import com.pblgllgs.accounts.dto.CustomerDetailsDto;
+import com.pblgllgs.accounts.dto.LoansDto;
 import com.pblgllgs.accounts.entity.Accounts;
 import com.pblgllgs.accounts.entity.Customer;
 import com.pblgllgs.accounts.exception.ResourceNotFoundException;
@@ -18,7 +21,7 @@ import com.pblgllgs.accounts.service.ICustomerService;
 import com.pblgllgs.accounts.service.client.CardsFeignClient;
 import com.pblgllgs.accounts.service.client.LoansFeignClient;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +29,9 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CustomerServiceImpl implements ICustomerService {
 
+    @Qualifier("com.pblgllgs.accounts.service.client.CardsFeignClient")
     private CardsFeignClient cardsFeignClient;
+    @Qualifier("com.pblgllgs.accounts.service.client.LoansFeignClient")
     private LoansFeignClient loansFeignClient;
     private AccountsRepository accountsRepository;
     private CustomerRepository customerRepository;
@@ -36,7 +41,7 @@ public class CustomerServiceImpl implements ICustomerService {
      * @return customer details, cards and loans
      */
     @Override
-    public CustomerDetailsDto fetchCustomerDetails(String mobileNumber,String correlationId) {
+    public CustomerDetailsDto fetchCustomerDetails(String mobileNumber, String correlationId) {
         Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException(
                         "Customer",
@@ -44,17 +49,20 @@ public class CustomerServiceImpl implements ICustomerService {
                         mobileNumber)
         );
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
-                () -> new ResourceNotFoundException("Account", "customerId",customer.getCustomerId().toString())
+                () -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString())
         );
 
-        CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer,new CustomerDetailsDto());
-        customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts,new AccountsDto()));
+        CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDto());
+        customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
         ResponseEntity<LoansDto> loansDtoResponseEntity = loansFeignClient.fetchLoanDetails(correlationId, mobileNumber);
-        customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
-
+        if ( null !=loansDtoResponseEntity) {
+            customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
+        }
         ResponseEntity<CardsDto> cardsDtoResponseEntity = cardsFeignClient.fetchCardDetails(correlationId, mobileNumber);
-        customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
+        if (null!=  cardsDtoResponseEntity) {
+            customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
+        }
 
         return customerDetailsDto;
     }
