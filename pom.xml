@@ -113,16 +113,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.3.2</version>
-				<configuration>
-					<to>
-						<image>pblgllgs/${project.artifactId}-sb3:v3</image>
-					</to>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
