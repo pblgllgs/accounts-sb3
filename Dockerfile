@@ -9,6 +9,7 @@ RUN apk add dumb-init && apk cache clean
 RUN mkdir /app
 RUN addgroup --system javauser && adduser -S -s /bin/false -G javauser javauser
 COPY --from=build /project/target/*.jar /app/app.jar
+COPY --from=build /project/tools/opentelemetry-javaagent-1.27.0.jar /app/libs/opentelemetry-javaagent-1.27.0.jar
 WORKDIR /app
 RUN chown -R javauser:javauser /app
 RUN apk add --update curl && rm -rf /var/cache/apk/*
