@@ -28,4 +28,6 @@ public interface IAccountsService {
      * @return boolean, delete is successful or not
      */
     boolean deleteAccount(String mobileNumber);
+
+    boolean updateCommunicationStatus(Long accountNumber);
 }
