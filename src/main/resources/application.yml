@@ -7,3 +7,16 @@ spring:
     active: local
   config:
     import: optional:configserver:http://${CONFIG_SERVER_HOST:localhost}:8071/
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+    function:
+      definition: updateCommunication
+    stream:
+      bindings:
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
+        sendCommunication-out-0:
+          destination: send-communication
