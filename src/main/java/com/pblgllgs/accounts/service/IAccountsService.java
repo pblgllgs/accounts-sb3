@@ -5,29 +5,29 @@ import com.pblgllgs.accounts.dto.CustomerDto;
 public interface IAccountsService {
 
     /**
-     * @param customerDto CustomerDto
+     *
+     * @param customerDto - CustomerDto Object
      */
     void createAccount(CustomerDto customerDto);
 
     /**
-     * @param mobileNumber
-     * @return customerDto details
+     *
+     * @param mobileNumber - Input Mobile Number
+     * @return Accounts Details based on a given mobileNumber
      */
-    CustomerDto fetchAccountDetail(String mobileNumber);
+    CustomerDto fetchAccount(String mobileNumber);
 
     /**
      *
-     * @param customerDto
-     * @return boolean, update is successful or not
+     * @param customerDto - CustomerDto Object
+     * @return boolean indicating if the update of Account details is successful or not
      */
     boolean updateAccount(CustomerDto customerDto);
 
     /**
      *
-     * @param mobileNumber
-     * @return boolean, delete is successful or not
+     * @param mobileNumber - Input Mobile Number
+     * @return boolean indicating if the delete of Account details is successful or not
      */
     boolean deleteAccount(String mobileNumber);
-
-    boolean updateCommunicationStatus(Long accountNumber);
 }
