@@ -127,7 +127,7 @@
 				<version>3.3.2</version>
 				<configuration>
 					<to>
-						<image>pblgllgs/${project.artifactId}-sb3:v3</image>
+						<image>pblgllgs/${project.artifactId}-sb3:v3-rabbit</image>
 					</to>
 				</configuration>
 			</plugin>
