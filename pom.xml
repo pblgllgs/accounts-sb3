@@ -57,7 +57,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-kubernetes-discoveryclient</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -127,7 +127,7 @@
 				<version>3.3.2</version>
 				<configuration>
 					<to>
-						<image>pblgllgs/${project.artifactId}-sb3:v3-kafka-k8s</image>
+						<image>pblgllgs/${project.artifactId}-sb3:v3-kafka-k8s-dc</image>
 					</to>
 				</configuration>
 			</plugin>
